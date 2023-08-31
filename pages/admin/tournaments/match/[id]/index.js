@@ -33,6 +33,7 @@ const Popup = ({ setIsPopupOpen, setFormdata, formData, cuurTeamList }) => {
                 {data?.responseData?.data?.map((item) => (
                     <div
                         onClick={(e) => {
+                            if (item.TotalPlayers < 11) return;
                             if (formData.team1Name === item.TeamName || formData.team2Name === item.TeamName) return;
 
                             if (cuurTeamList === 1)
@@ -51,7 +52,9 @@ const Popup = ({ setIsPopupOpen, setFormdata, formData, cuurTeamList }) => {
                             setIsPopupOpen(false);
                         }}
                         className={`px-6 py-3 rounded-md border-2 mb-3 border-gray-400 cursor-pointer ${
-                            formData.team1Name === item.TeamName || formData.team2Name === item.TeamName
+                            item.TotalPlayers < 11 ||
+                            formData.team1Name === item.TeamName ||
+                            formData.team2Name === item.TeamName
                                 ? 'opacity-40'
                                 : ''
                         }`}
@@ -60,7 +63,12 @@ const Popup = ({ setIsPopupOpen, setFormdata, formData, cuurTeamList }) => {
                             <div className='relative h-[25px] w-[25px]'>
                                 <Image layout='fill' objectFit='cover' src={`http://localhost:5500/${item.Image}`} />
                             </div>
-                            <p>{item.TeamName}</p>
+                            <div>
+                                <p>{item.TeamName}</p>
+                                <p className='text-xs text-red-600 font-medium'>
+                                    {item.TotalPlayers >= 11 ? '' : `need ${11 - item.TotalPlayers}  more players`}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -282,7 +290,22 @@ const AllTeams = () => {
                     <div className='w-full h-[1px] bg-gray-400 my-6'> </div>
                     <div className='mt-10 grid grid-cols-3 gap-6 mb-10'>
                         {data?.responseData?.data?.map((item) => (
-                            <MatchCard data={item} />
+                            <div
+                                onClick={(e) =>
+                                    router.push({
+                                        pathname: `/admin/tournaments/match/start`,
+                                        query: {
+                                            id: id,
+                                            team1: item.Team1ID,
+                                            team2: item.Team2ID,
+                                            team1Name: item.Team1name,
+                                            team2Name: item.Team2name,
+                                        },
+                                    })
+                                }
+                            >
+                                <MatchCard data={item} />
+                            </div>
                         ))}
                     </div>
                 </div>
