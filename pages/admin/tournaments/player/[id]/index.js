@@ -295,7 +295,7 @@ const AllTeams = () => {
                     <div className='flex items-center justify-between'>
                         <h3 className='text-dark1 text-3xl font-extrabold mb-6'>
                             {data && data?.status === 200
-                                ? 'All Teams'
+                                ? 'All Players'
                                 : data?.status === 404
                                 ? 'No Data Found'
                                 : 'Something wrong'}
@@ -309,7 +309,7 @@ const AllTeams = () => {
                         </button>
                     </div>
                     <div className='w-full h-[1px] bg-gray-400 my-6'> </div>
-                    <div className='mt-10 grid grid-cols-3 gap-6'>
+                    <div className='mt-10 grid grid-cols-3 gap-6 mb-10'>
                         {data?.responseData?.data?.map((item) => (
                             <PlayerCard data={item.Player} />
                         ))}

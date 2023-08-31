@@ -1,5 +1,5 @@
 'use client';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import CrButton from '@/components/CrButton';
 import ProfileInput from '@/components/ProfileInput';
 import useAuthentication from '@/hooks/useAuth';
@@ -8,9 +8,12 @@ import { useState } from 'react';
 import useCustomMutation, { useCustomQuery } from '@/hooks/useMutationHook';
 import { toast } from 'react-toastify';
 import { toastConfig } from '@/util/toastConfig';
+import inputValidations from '@/util/validaton';
 import axios from 'axios';
+
 const Home = () => {
     const { isAuthenticated, uid, token, email } = useAuthentication();
+    const divRef = useRef(null);
     console.log(isAuthenticated, uid, token, email);
 
     const router = useRouter();
@@ -26,24 +29,7 @@ const Home = () => {
         state: '',
     });
     const [isLoading, setIsLoading] = useState(false);
-
-    // const {
-    //     data,
-    //     isLoading: loading,
-    //     error,
-    // } = useCustomQuery(`/organizer/onboard?uid=${uid}`, uid?.trim(0, 10) + 'Organizer', token);
-
-    // if (loading) {
-    //     return <div>loading...</div>;
-    // }
-
-    // if (error) {
-    //     return <div>Error: {error.message}</div>;
-    // }
-
-    // if (data.responseData.isActive) {
-    //     router.push('/admin');
-    // }
+    const [disable, setDisable] = useState(true);
 
     const onChangeHandler = (e) => {
         setFormdata((state) => ({
@@ -94,6 +80,22 @@ const Home = () => {
         }
     };
 
+    useEffect(() => {
+        const errExist = !!divRef.current?.getElementsByClassName('FORM_ERROR_EXISTS').length;
+
+        const fieldsCheck = !(
+            formData.fname &&
+            formData.lname &&
+            formData.phone &&
+            formData.address &&
+            formData.city &&
+            formData.pin &&
+            formData.state
+        );
+
+        setDisable(errExist || fieldsCheck);
+    }, [formData]);
+
     return (
         <div>
             <Suspense fallback={<p>Loading feed...</p>}>
@@ -101,9 +103,9 @@ const Home = () => {
                     <div className='flex justify-center items-center min-h-[100vh] '>
                         <div className='w-[70%]'>
                             <h3 className='text-dark1 text-3xl font-extrabold mb-6'>Fill Your Details</h3>
-                            <div className='grid grid-cols-2 gap-6'>
+                            <div ref={divRef} className='grid grid-cols-2 gap-6'>
                                 <ProfileInput
-                                    simpleLable='FIrst Name'
+                                    simpleLable='Frrst Name'
                                     labelClassName='text-base ml-1 text-dark2 font-bold'
                                     name='fname'
                                     placeholder='ex. Moeen'
@@ -113,6 +115,7 @@ const Home = () => {
                                     required
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.name}
                                 />
                                 <ProfileInput
                                     simpleLable='Last Name'
@@ -125,6 +128,7 @@ const Home = () => {
                                     type='text'
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.name}
                                 />
                             </div>
                             <div className='grid grid-cols-2 gap-6'>
@@ -139,6 +143,7 @@ const Home = () => {
                                     type='text'
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.phone}
                                 />
                                 <ProfileInput
                                     simpleLable='Pin Code'
@@ -151,6 +156,7 @@ const Home = () => {
                                     type='text'
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.pincode}
                                 />
                             </div>
                             <div className='grid grid-cols-2 gap-6'>
@@ -165,6 +171,7 @@ const Home = () => {
                                     type='text'
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.address}
                                 />
                                 <ProfileInput
                                     simpleLable='City / Town'
@@ -177,6 +184,7 @@ const Home = () => {
                                     type='text'
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.name}
                                 />
                             </div>
                             <div className='grid grid-cols-2 gap-6 items-center'>
@@ -191,8 +199,10 @@ const Home = () => {
                                     type='text'
                                     pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-full'
                                     inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                    validation={inputValidations.name}
                                 />
                                 <CrButton
+                                    disabled={disable}
                                     fn={submitHandler}
                                     name='Submit'
                                     loading={isLoading}

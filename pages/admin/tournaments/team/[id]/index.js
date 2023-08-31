@@ -27,6 +27,7 @@ const AllTeams = () => {
     const { data, isLoading: loading, error } = useCustomQuery(`/team?trophyId=${id}`, 'allTeams');
     const [isOpen, setIsOpen] = useState(false);
     const [teamName, setTeamName] = useState('');
+    const [shortName, setShortName] = useState('');
     const [disable, setDisable] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -41,10 +42,10 @@ const AllTeams = () => {
     useEffect(() => {
         const errExist = !!divRef.current?.getElementsByClassName('FORM_ERROR_EXISTS').length;
 
-        const fieldsCheck = !teamName;
+        const fieldsCheck = !(teamName && shortName);
 
         setDisable(errExist || fieldsCheck);
-    }, [teamName]);
+    }, [teamName, shortName]);
 
     const submitHandler = async () => {
         if (!teamName) {
@@ -57,6 +58,7 @@ const AllTeams = () => {
 
         formData.append('uid', uid);
         formData.append('name', teamName);
+        formData.append('shortName', shortName);
         formData.append('trophyId', id);
         formData.append('Image', selectedFile);
 
@@ -75,6 +77,7 @@ const AllTeams = () => {
             if (response.status === 201) {
                 toast.success('Added successfully', toastConfig());
                 setTeamName('');
+                setShortName('');
                 setSelectedFile('');
                 setPreviewUrl('');
                 queryClient.invalidateQueries(['allTeams']);
@@ -126,6 +129,19 @@ const AllTeams = () => {
                                 type='text'
                                 value={teamName}
                                 onChange={(e) => setTeamName(e.target.value)}
+                                required
+                                pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-[340px]'
+                                inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'
+                                validation={inputValidations.name}
+                            />
+                            <ProfileInput
+                                simpleLable='Short Name'
+                                labelClassName='text-base ml-1 text-dark2 font-bold'
+                                name='shortName'
+                                placeholder='ex. IND'
+                                type='text'
+                                value={shortName}
+                                onChange={(e) => setShortName(e.target.value)}
                                 required
                                 pClassName='shadow-sm mb-4 border-2 px-2 py-1 border-gray-300 focus-within:border-primary rounded-xl w-[340px]'
                                 inputClassName='font-normal sm:text-[16px] py-1 h-[38px] outline-none border-none'

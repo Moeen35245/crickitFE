@@ -21,13 +21,13 @@ const Tournament = () => {
                 <h3 className='text-dark1 text-3xl font-extrabold mt-10'>{name}</h3>
                 <div className='mt-6 grid grid-cols-3 items-center mx-auto gap-6'>
                     <div
-                        // onClick={(e) => router.push('/admin/tournaments/add')}
+                        onClick={(e) => router.push(`/admin/tournaments/match/${id}`)}
                         className='border-2 border-primary rounded-xl p-7 bg-white shadow-lg cursor-pointer'
                     >
                         <div className='flex gap-2 items-center justify-around'>
-                            <h4 className='font-bold text-xl text-primary'>Schedule Match</h4>
+                            <h4 className='font-bold text-xl text-primary'>Matches Schedule</h4>
                             <div className='p-2 rounded-full border-2 border-primary max-w-[fit-content]'>
-                                <PlusIcon className='text-primary h-5 w-5' />
+                                <ChevronRightIcon className='text-primary h-5 w-5' />
                             </div>
                         </div>
                     </div>

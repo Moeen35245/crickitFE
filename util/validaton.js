@@ -31,8 +31,8 @@ const inputValidations = {
     },
     pincode: {
         // must be 6 digits
-        regex: /^[0-9]{4}$/,
-        errorMsg: 'Pincode must be 4 digits',
+        regex: /^[0-9]{6}$/,
+        errorMsg: 'Pincode must be 6 digits',
     },
 
     otp: {

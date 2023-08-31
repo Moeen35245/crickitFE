@@ -3,6 +3,7 @@ import { FiCalendar, FiCheck, FiChevronLeft, FiChevronRight, FiMapPin, FiUser } 
 import { BiCricketBall } from 'react-icons/bi';
 import { TbCricket } from 'react-icons/tb';
 import { IconContainer } from './IconContainer';
+import PlayerJersey from '../public/player-jersey.svg';
 import Image from 'next/image';
 const PlayerCard = ({ data }) => {
     return (
@@ -13,9 +14,10 @@ const PlayerCard = ({ data }) => {
             <div className='flex justify-center'>
                 <div className='relative overflow-hidden -translate-y-[50%] h-[50px] w-[50px] rounded-full border-2 border-primary'>
                     <Image
-                        src={data.Image ? `http://localhost:5500/${data.Image}` : ''}
+                        src={data.Image ? `http://localhost:5500/${data.Image}` : PlayerJersey}
                         objectFit='cover'
                         layout='fill'
+                        alt="data.FirstName + ' ' + data.LastName"
                     />
                 </div>
             </div>

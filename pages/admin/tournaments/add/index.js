@@ -138,7 +138,7 @@ const TournamentAdd = () => {
                                 simpleLable='Venue'
                                 labelClassName='text-base ml-1 text-dark2 font-bold'
                                 name='venue'
-                                placeholder='ex. Wankede Stadium'
+                                placeholder='ex. India'
                                 value={formData.venue}
                                 onChange={(e) => onChangeHandler(e)}
                                 required
