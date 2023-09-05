@@ -295,7 +295,7 @@ const AllTeams = () => {
                                     router.push({
                                         pathname: `/admin/tournaments/match/start`,
                                         query: {
-                                            id: id,
+                                            id: item.MatchID,
                                             team1: item.Team1ID,
                                             team2: item.Team2ID,
                                             team1Name: item.Team1name,

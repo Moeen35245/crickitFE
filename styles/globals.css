@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,600;0,9..40,800;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,600;1,9..40,800;1,9..40,1000&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,6 +18,14 @@
     font-weight: 500 !important;
     margin-left: 7px !important;
     /* padding: 0px !important; */
+}
+
+* {
+    font-family: 'DM Sans', sans-serif;
+}
+
+body {
+    color: #334155;
 }
 
 /* :root {

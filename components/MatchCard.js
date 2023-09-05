@@ -62,7 +62,7 @@ const MatchCard = ({ data }) => {
                     </IconContainer>
                     <div className='flex items-start flex-col'>
                         <p className='text-gray-400 text-sm'>Match:</p>
-                        <p className='text-base font-semibold'>{data.MatchNo}</p>
+                        <p className='text-sm font-semibold'>{data.MatchNo}</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@ const MatchCard = ({ data }) => {
                 </IconContainer>
                 <div className='flex items-start flex-col'>
                     <p className='text-gray-400 text-sm'>Result:</p>
-                    <p className='text-base font-semibold'>{data.Result}</p>
+                    <p className='text-sm font-semibold'>{data.Result}</p>
                 </div>
             </div>
 

@@ -10,7 +10,7 @@ const CrButton = ({ name, fn, styles, loading, disabled }) => {
             bg-secondaryBlue text-white mt-4 hover:opacity-[0.8] dark-shadow
             rounded-md flex items-center justify-center mx-auto font-bold`,
                 styles,
-                `${disabled || loading ? 'bg-primary/75 cursor-not-allowed' : ''}`
+                `${disabled || loading ? 'bg-primary/50 cursor-not-allowed' : ''}`
             )}
         >
             {loading ? <Loader /> : name}
